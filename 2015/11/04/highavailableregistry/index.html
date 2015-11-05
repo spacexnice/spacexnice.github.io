@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Docker,Registry," />
 
 
 
@@ -54,36 +54,33 @@
 
 
 <meta name="description" content="本文用于搭建一个基于haproxy和keepalived的高可用的私有docker registry
-##部署结构
-
+部署结构
 haproxy keepalived 主：221.228.86.4
 haproxy keepalived 备：221.228.86.5
 docker registry 1：    221.228.86.6
 docker registry 2：    221.228.86.67
-VI">
+VIP :">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于haproxy和keepalived的高可用的私有docker registry">
 <meta property="og:url" content="http://spacexnice.github.io/2015/11/04/highavailableregistry/index.html">
 <meta property="og:site_name" content="向未来致敬">
 <meta property="og:description" content="本文用于搭建一个基于haproxy和keepalived的高可用的私有docker registry
-##部署结构
-
+部署结构
 haproxy keepalived 主：221.228.86.4
 haproxy keepalived 备：221.228.86.5
 docker registry 1：    221.228.86.6
 docker registry 2：    221.228.86.67
-VI">
-<meta property="og:updated_time" content="2015-11-05T07:09:41.000Z">
+VIP :">
+<meta property="og:updated_time" content="2015-11-05T14:03:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于haproxy和keepalived的高可用的私有docker registry">
 <meta name="twitter:description" content="本文用于搭建一个基于haproxy和keepalived的高可用的私有docker registry
-##部署结构
-
+部署结构
 haproxy keepalived 主：221.228.86.4
 haproxy keepalived 备：221.228.86.5
 docker registry 1：    221.228.86.6
 docker registry 2：    221.228.86.67
-VI">
+VIP :">
 
 
 
@@ -281,6 +278,33 @@ VI">
           </span>
 
           
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Docker/容器/" itemprop="url" rel="index">
+                    <span itemprop="name">容器</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
 
           
             
@@ -307,68 +331,68 @@ VI">
 
       
         <span itemprop="articleBody"><p>本文用于搭建一个基于haproxy和keepalived的高可用的私有docker registry</p>
-<p>##部署结构</p>
-<ul>
+<h2 id="部署结构">部署结构</h2><ul>
 <li>haproxy keepalived 主：221.228.86.4</li>
 <li>haproxy keepalived 备：221.228.86.5</li>
 <li>docker registry 1：    221.228.86.6</li>
 <li>docker registry 2：    221.228.86.67</li>
-<li>VIP : 221.228.86.70 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">                    <span class="number">221.228</span>.<span class="number">86.100</span></span><br><span class="line">             +-----------VIP----------+   </span><br><span class="line">             |                        |</span><br><span class="line">             |                        |</span><br><span class="line">           Master                   Backup</span><br><span class="line">        <span class="number">221.228</span>.<span class="number">86.4</span>             <span class="number">221.228</span>.<span class="number">86.6</span></span><br><span class="line">        +----------+             +----------+</span><br><span class="line">        | HAProxy  |             | HAProxy  |</span><br><span class="line">        |keepalived|             |keepalived|</span><br><span class="line">        +----------+             +----------+</span><br><span class="line">             |  </span><br><span class="line">             v  </span><br><span class="line">    +--------+---------+ </span><br><span class="line">    |        |         |</span><br><span class="line">    |        |         |</span><br><span class="line">    v        v         v</span><br><span class="line">+------+  +------+  +------+</span><br><span class="line">| WEB1 |  | WEB2 |  | WEB3 |</span><br><span class="line">+------+  +------+  +------+</span><br></pre></td></tr></table></figure>
-</li>
+<li>VIP : 221.228.86.70 </li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">                    <span class="number">221.228</span>.<span class="number">86.100</span></span><br><span class="line">             +-----------VIP----------+   </span><br><span class="line">             |                        |</span><br><span class="line">             |                        |</span><br><span class="line">           Master                   Backup</span><br><span class="line">        <span class="number">221.228</span>.<span class="number">86.4</span>             <span class="number">221.228</span>.<span class="number">86.6</span></span><br><span class="line">        +----------+             +----------+</span><br><span class="line">        | HAProxy  |             | HAProxy  |</span><br><span class="line">        |keepalived|             |keepalived|</span><br><span class="line">        +----------+             +----------+</span><br><span class="line">             |  </span><br><span class="line">             v  </span><br><span class="line">    +--------+---------+ </span><br><span class="line">    |        |         |</span><br><span class="line">    |        |         |</span><br><span class="line">    v        v         v</span><br><span class="line">+------+  +------+  +------+</span><br><span class="line">| WEB1 |  | WEB2 |  | WEB3 |</span><br><span class="line">+------+  +------+  +------+</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h4 id="修改docker_daemon_启动参数">修改docker daemon 启动参数</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#20462;&#25913;/etc/default/docker&#25991;&#20214;&#65292;&#22312;DOCKER_OPTS=&#34;--insecure-registry vip:5000&#34;</span><br></pre></td></tr></table></figure>
-<h2 id="1-_docker_registry_配置">1. docker registry 配置</h2><ul>
+<p>####修改docker daemon 启动参数<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">修改/etc/default/docker文件，在DOCKER_OPTS=<span class="string">"--insecure-registry vip:5000"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Docker_Registry_配置">Docker Registry 配置</h2><ul>
 <li>参考 <a href="https://github.com/docker/distribution/blob/master/docs/configuration.md" target="_blank" rel="external">https://github.com/docker/distribution/blob/master/docs/configuration.md</a></li>
 <li>221.228.86.5 221.228.86.67</li>
-<li><p>在/var/lib/pri_docker_registry/目录下建立config.yml配置文件,内容如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">version: 0.1&#10;log:&#10;  level: debug&#10;  formatter: json&#10;  fields:&#10;    service: registry&#10;  hooks:&#10;    - type: mail&#10;      disabled: true&#10;      levels:&#10;        - panic&#10;      options:&#10;        smtp:&#10;          addr: mail.yy.com:25&#10;          username: xxx&#10;          password: pass&#10;          insecure: true&#10;        from: sender@yy.com&#10;        to:&#10;          - errors@yy.com&#10;storage:&#10;    filesystem:&#10;        rootdirectory: /var/lib/registry&#10;    delete:&#10;      enabled: true&#10;    redirect:&#10;      disable: false&#10;http:&#10;    addr: :5000&#10;    headers:&#10;        X-Content-Type-Options: [nosniff]&#10;health:&#10;  storagedriver:&#10;    enabled: true&#10;    interval: 10s&#10;    threshold: 3</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在docker registry 1 、2、3上分别执行如下命令</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /var/lib/registry&#10;$ docker run -d -p 5000:5000 --net=host --restart=always -v /var/lib/pri_docker_registry/config.yml:/etc/docker/registry/config.yml -v /var/lib/registry:/var/lib/registry -v /etc/ceph/:/etc/ceph/ --name docker-registry registry:2.1</span><br></pre></td></tr></table></figure>
-</li>
+<li>在/var/lib/pri_docker_registry/目录下建立config.yml配置文件,内容如下：</li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">version: <span class="number">0.1</span></span><br><span class="line"><span class="built_in">log</span>:</span><br><span class="line">  level: debug</span><br><span class="line">  formatter: json</span><br><span class="line">  fields:</span><br><span class="line">    service: registry</span><br><span class="line">  hooks:</span><br><span class="line">    - <span class="built_in">type</span>: mail</span><br><span class="line">      disabled: <span class="literal">true</span></span><br><span class="line">      levels:</span><br><span class="line">        - panic</span><br><span class="line">      options:</span><br><span class="line">        smtp:</span><br><span class="line">          addr: mail.yy.com:<span class="number">25</span></span><br><span class="line">          username: xxx</span><br><span class="line">          password: pass</span><br><span class="line">          insecure: <span class="literal">true</span></span><br><span class="line">        from: sender@yy.com</span><br><span class="line">        to:</span><br><span class="line">          - errors@yy.com</span><br><span class="line">storage:</span><br><span class="line">    filesystem:</span><br><span class="line">        rootdirectory: /var/lib/registry</span><br><span class="line">    delete:</span><br><span class="line">      enabled: <span class="literal">true</span></span><br><span class="line">    redirect:</span><br><span class="line">      <span class="built_in">disable</span>: <span class="literal">false</span></span><br><span class="line">http:</span><br><span class="line">    addr: :<span class="number">5000</span></span><br><span class="line">    headers:</span><br><span class="line">        X-Content-Type-Options: [nosniff]</span><br><span class="line">health:</span><br><span class="line">  storagedriver:</span><br><span class="line">    enabled: <span class="literal">true</span></span><br><span class="line">    interval: <span class="number">10</span>s</span><br><span class="line">    threshold: <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在docker registry 1 、2、3上分别执行如下命令</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /var/lib/registry</span><br><span class="line">$ docker run <span class="operator">-d</span> -p <span class="number">5000</span>:<span class="number">5000</span> --net=host --restart=always -v /var/lib/pri_docker_registry/config.yml:/etc/docker/registry/config.yml -v /var/lib/registry:/var/lib/registry -v /etc/ceph/:/etc/ceph/ --name docker-registry registry:<span class="number">2.1</span></span><br></pre></td></tr></table></figure>
 <p>一定要将ceph的配置文件挂载进入容器，rados访问ceph需要</p>
 <ul>
-<li>配置iptables规则，只允许proxy机器访问<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ iptables -A INPUT -d 221.228.86.67/32 -m comment --comment &#34;not allow to be connected except proxy&#34; -j DROP&#10;$ iptables -I INPUT 1 -s 221.228.86.4 -d 221.228.86.67 -j ACCEPT&#10;$ iptables -I INPUT 1 -s 221.228.86.6 -d 221.228.86.67 -j ACCEPT&#10;# &#28155;&#21152;&#21150;&#20844;&#32593;&#30340;&#35775;&#38382;&#10;$ iptables -I INPUT -s 183.60.177.224/27 -d 221.228.86.70/32 -j ACCEPT&#10;  # &#37197;&#32622;221.228.86.6&#10;$ iptables -A INPUT -d 221.228.86.5/32 -m comment --comment &#34;not allow to be connected except proxy&#34; -j DROP&#10;$ iptables -I INPUT 1 -s 221.228.86.4 -d 221.228.86.5 -j ACCEPT&#10;$ iptables -I INPUT 1 -s 221.228.86.6 -d 221.228.86.5 -j ACCEPT&#10;$ iptables -I INPUT -s 183.60.177.224/27 -d 221.228.86.70/32 -j ACCEPT</span><br></pre></td></tr></table></figure>
-</li>
+<li>配置iptables规则，只允许proxy机器访问</li>
 </ul>
-<h2 id="2-_Haproxy_配置">2. Haproxy 配置</h2><ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ iptables -A INPUT <span class="operator">-d</span> <span class="number">221.228</span>.<span class="number">86.67</span>/<span class="number">32</span> -m comment --comment <span class="string">"not allow to be connected except proxy"</span> -j DROP</span><br><span class="line">$ iptables -I INPUT <span class="number">1</span> <span class="operator">-s</span> <span class="number">221.228</span>.<span class="number">86.4</span> <span class="operator">-d</span> <span class="number">221.228</span>.<span class="number">86.67</span> -j ACCEPT</span><br><span class="line">$ iptables -I INPUT <span class="number">1</span> <span class="operator">-s</span> <span class="number">221.228</span>.<span class="number">86.6</span> <span class="operator">-d</span> <span class="number">221.228</span>.<span class="number">86.67</span> -j ACCEPT</span><br><span class="line"><span class="comment"># 添加办公网的访问</span></span><br><span class="line">$ iptables -I INPUT <span class="operator">-s</span> <span class="number">183.60</span>.<span class="number">177.224</span>/<span class="number">27</span> <span class="operator">-d</span> <span class="number">221.228</span>.<span class="number">86.70</span>/<span class="number">32</span> -j ACCEPT</span><br><span class="line">  <span class="comment"># 配置221.228.86.6</span></span><br><span class="line">$ iptables -A INPUT <span class="operator">-d</span> <span class="number">221.228</span>.<span class="number">86.5</span>/<span class="number">32</span> -m comment --comment <span class="string">"not allow to be connected except proxy"</span> -j DROP</span><br><span class="line">$ iptables -I INPUT <span class="number">1</span> <span class="operator">-s</span> <span class="number">221.228</span>.<span class="number">86.4</span> <span class="operator">-d</span> <span class="number">221.228</span>.<span class="number">86.5</span> -j ACCEPT</span><br><span class="line">$ iptables -I INPUT <span class="number">1</span> <span class="operator">-s</span> <span class="number">221.228</span>.<span class="number">86.6</span> <span class="operator">-d</span> <span class="number">221.228</span>.<span class="number">86.5</span> -j ACCEPT</span><br><span class="line">$ iptables -I INPUT <span class="operator">-s</span> <span class="number">183.60</span>.<span class="number">177.224</span>/<span class="number">27</span> <span class="operator">-d</span> <span class="number">221.228</span>.<span class="number">86.70</span>/<span class="number">32</span> -j ACCEPT</span><br></pre></td></tr></table></figure>
+<h2 id="Haproxy_配置">Haproxy 配置</h2><ul>
 <li>参考 <a href="https://hub.docker.com/_/haproxy/" target="_blank" rel="external">https://hub.docker.com/_/haproxy/</a></li>
-<li>在haproxy 主备上分别执行下面命令,在/var/lib/hadporxy/目录下建立haproxy.cfg配置文件,内容如下:<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">global&#10;    log 127.0.0.1 local3 info&#10;    maxconn 4096&#10;    nbproc 1&#10;    pidfile /var/lib/haproxy/haproxy.pid&#10;defaults&#10;    maxconn 2000&#10;    timeout connect 5000&#10;    timeout client 30000&#10;    timeout server 30000&#10;    mode http&#10;    stats uri /admin?stats&#10;    option forwardfor&#10;frontend http_server&#10;    bind :5000&#10;    log global&#10;    default_backend docker-registry&#10;    #acl test hdr_dom(host) -i test.domain.com&#10;    #use_backend cache_test if test&#10;backend docker-registry&#10;    #balance roundrobin&#10;    balance source&#10;    option httpchk GET /v2/ HTTP/1.1\r\nHost:221.228.86.6&#10;    server inst1 221.228.86.5:5000 check inter 5000 fall 3&#10;    server inst2 221.228.86.67:5000 check inter 5000 fall 3&#10;#HAProxy&#31649;&#29702;&#39029;&#38754; &#10;listen admin_stat&#10;    bind *:1158                    #&#31649;&#29702;&#39029;&#38754;&#31471;&#21475;&#10;    mode http                        &#10;    stats refresh 10s                #&#33258;&#21160;&#21047;&#26032;&#26102;&#38388;&#10;    stats uri /haproxy                 #&#39029;&#38754;&#21517;&#31216;&#10;    stats realm Haproxy\ Statistics     #&#30331;&#24405;&#25552;&#31034;&#10;    stats auth admin:admin    #&#24080;&#21495;&#23494;&#30721;&#10;    stats hide-version &#10;stats admin if TRUE</span><br></pre></td></tr></table></figure>
-</li>
+<li>在haproxy 主备上分别执行下面命令,在/var/lib/hadporxy/目录下建立haproxy.cfg配置文件,内容如下:</li>
 </ul>
-<h4 id="创建haproxy-registry容器">创建haproxy-registry容器</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /var/lib/haproxy&#10;$ docker run -d --name haproxy-registry --net=host -v /var/lib/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro haproxy:1.5</span><br></pre></td></tr></table></figure>
-<h4 id="清除Iptables_规则，目前让所有机器都能访问该proxy">清除Iptables 规则，目前让所有机器都能访问该proxy</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ iptables -D INPUT -d 221.228.86.5/32 -m comment --comment sigma -j DROP</span><br></pre></td></tr></table></figure>
-<h2 id="3-_设置keepalived_使用主备模式">3. 设置keepalived 使用主备模式</h2><ul>
-<li>在221.228.86.4 221.228.86.6机器上同时安装keepalived，keepalived配置文件区别设置<h4 id="Ubuntu_Keepalived安装">Ubuntu Keepalived安装</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install keepalived</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">global</span><br><span class="line">    <span class="built_in">log</span> <span class="number">127.0</span>.<span class="number">0.1</span> <span class="built_in">local</span>3 info</span><br><span class="line">    maxconn <span class="number">4096</span></span><br><span class="line">    nbproc <span class="number">1</span></span><br><span class="line">    pidfile /var/lib/haproxy/haproxy.pid</span><br><span class="line">defaults</span><br><span class="line">    maxconn <span class="number">2000</span></span><br><span class="line">    timeout connect <span class="number">5000</span></span><br><span class="line">    timeout client <span class="number">30000</span></span><br><span class="line">    timeout server <span class="number">30000</span></span><br><span class="line">    mode http</span><br><span class="line">    stats uri /admin?stats</span><br><span class="line">    option forwardfor</span><br><span class="line">frontend http_server</span><br><span class="line">    <span class="built_in">bind</span> :<span class="number">5000</span></span><br><span class="line">    <span class="built_in">log</span> global</span><br><span class="line">    default_backend docker-registry</span><br><span class="line">    <span class="comment">#acl test hdr_dom(host) -i test.domain.com</span></span><br><span class="line">    <span class="comment">#use_backend cache_test if test</span></span><br><span class="line">backend docker-registry</span><br><span class="line">    <span class="comment">#balance roundrobin</span></span><br><span class="line">    balance <span class="built_in">source</span></span><br><span class="line">    option httpchk GET /v2/ HTTP/<span class="number">1.1</span>\r\nHost:<span class="number">221.228</span>.<span class="number">86.6</span></span><br><span class="line">    server inst1 <span class="number">221.228</span>.<span class="number">86.5</span>:<span class="number">5000</span> check inter <span class="number">5000</span> fall <span class="number">3</span></span><br><span class="line">    server inst2 <span class="number">221.228</span>.<span class="number">86.67</span>:<span class="number">5000</span> check inter <span class="number">5000</span> fall <span class="number">3</span></span><br><span class="line"><span class="comment">#HAProxy管理页面 </span></span><br><span class="line">listen admin_<span class="built_in">stat</span></span><br><span class="line">    <span class="built_in">bind</span> *:<span class="number">1158</span>                    <span class="comment">#管理页面端口</span></span><br><span class="line">    mode http                        </span><br><span class="line">    stats refresh <span class="number">10</span>s                <span class="comment">#自动刷新时间</span></span><br><span class="line">    stats uri /haproxy                 <span class="comment">#页面名称</span></span><br><span class="line">    stats realm Haproxy\ Statistics     <span class="comment">#登录提示</span></span><br><span class="line">    stats auth admin:admin    <span class="comment">#帐号密码</span></span><br><span class="line">    stats hide-version </span><br><span class="line">stats admin <span class="keyword">if</span> TRUE</span><br></pre></td></tr></table></figure>
+<p>####创建haproxy-registry容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /var/lib/haproxy</span><br><span class="line">$ docker run <span class="operator">-d</span> --name haproxy-registry --net=host -v /var/lib/haproxy/haproxy.cfg:/usr/<span class="built_in">local</span>/etc/haproxy/haproxy.cfg:ro haproxy:<span class="number">1.5</span></span><br></pre></td></tr></table></figure>
+<p>####清除Iptables 规则，目前让所有机器都能访问该proxy</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ iptables -D INPUT <span class="operator">-d</span> <span class="number">221.228</span>.<span class="number">86.5</span>/<span class="number">32</span> -m comment --comment sigma -j DROP</span><br></pre></td></tr></table></figure>
+<h2 id="Keepalived主备配置">Keepalived主备配置</h2><p>使用Keeplalived管理浮动IP</p>
+<ul>
+<li>在221.228.86.4 221.228.86.6机器上同时安装keepalived，keepalived配置文件区别设置<br>####Ubuntu Keepalived安装</li>
 </ul>
-<h4 id="Master（221-228-86-4）服务器配置_/etc/keepalived/keepalived-conf">Master（221.228.86.4）服务器配置 /etc/keepalived/keepalived.conf</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">global_defs &#123;&#10;   notification_email &#123;&#10;       xieyaoyao@yy.com&#10;   &#125;&#10;   notification_email_from mail@example.org&#10;   smtp_server mail.yy.com&#10;   smtp_connect_timeout 30&#10;   router_id LVS_DEVEL&#10;&#125;&#10;#&#30417;&#27979;haproxy&#36827;&#31243;&#29366;&#24577;&#65292;&#27599;2&#31186;&#25191;&#34892;&#19968;&#27425;&#10;vrrp_script chk_haproxy &#123;&#10;    script &#34;/usr/local/keepalived/chk_haproxy.sh&#34;&#10;    interval 2&#10;    weight 2&#10;&#125;&#10;vrrp_instance VI_1 &#123;&#10;    state MASTER #&#26631;&#31034;&#29366;&#24577;&#20026;MASTER&#10;    interface eth0&#10;    virtual_router_id 51&#10;    priority 101   #MASTER&#26435;&#37325;&#35201;&#39640;&#20110;BACKUP&#10;    advert_int 1&#10;    mcast_src_ip 221.228.86.4 #Master&#26381;&#21153;&#22120;IP&#10;    authentication &#123;&#10;        auth_type PASS #&#20027;&#20174;&#26381;&#21153;&#22120;&#39564;&#35777;&#26041;&#24335;&#10;        auth_pass 1111&#10;    &#125;&#10;    track_script &#123;&#10;        chk_haproxy #&#30417;&#27979;haproxy&#36827;&#31243;&#29366;&#24577;&#10;    &#125;&#10;    #VIP&#10;    virtual_ipaddress &#123;&#10;        221.228.86.70 #&#34394;&#25311;IP&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>####Backup（221.228.86.6）服务器上的配置 /etc/keepalived/keepalived.conf<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">global_defs &#123;&#10;   notification_email &#123;&#10;   user@example.com&#10;   &#125;&#10;   notification_email_from mail@example.org&#10;   smtp_server 192.168.x.x&#10;   smtp_connect_timeout 30&#10;   router_id LVS_DEVEL&#10;&#125;&#10;#&#30417;&#27979;haproxy&#36827;&#31243;&#29366;&#24577;&#65292;&#27599;2&#31186;&#25191;&#34892;&#19968;&#27425;&#10;vrrp_script chk_haproxy &#123;&#10;    script &#34;/usr/local/keepalived/chk_haproxy.sh&#34;&#10;    interval 2&#10;    weight 2&#10;&#125;&#10;vrrp_instance VI_1 &#123;&#10;    state BACKUP #&#29366;&#24577;&#20026;BACKUP&#10;    interface eth0&#10;    virtual_router_id 51&#10;    priority 100  #&#26435;&#37325;&#35201;&#20302;&#20110;MASTER&#10;    advert_int 1&#10;    mcast_src_ip 221.228.86.6 #Backup&#26381;&#21153;&#22120;&#30340;IP&#10;    authentication &#123;&#10;        auth_type PASS&#10;        auth_pass 1111&#10;    &#125;&#10;    track_script &#123;&#10;        chk_haproxy #&#30417;&#27979;haproxy&#36827;&#31243;&#29366;&#24577;&#10;    &#125;&#10;    #VIP&#10;    virtual_ipaddress &#123;&#10;        221.228.86.70 #&#34394;&#25311;IP&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="chk_haproxy-sh内容_/usr/local/keepalived/chk_haproxy-sh">chk_haproxy.sh内容 /usr/local/keepalived/chk_haproxy.sh</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash&#10;#&#10;# author: weizhifeng&#10;# description: &#10;# &#23450;&#26102;&#26597;&#30475;haproxy&#26159;&#21542;&#23384;&#22312;&#65292;&#22914;&#26524;&#19981;&#23384;&#22312;&#21017;&#21551;&#21160;haproxy&#65292;&#10;# &#22914;&#26524;&#21551;&#21160;&#22833;&#36133;&#65292;&#21017;&#20572;&#27490;keepalived&#10;# &#10;status=$(docker inspect  -f &#34;&#123;&#123;.State.Running&#125;&#125;&#34; haproxy-registry)&#10;if [ &#34;$&#123;status&#125;&#34; = &#34;false&#34; ]; then&#10;    docker start haproxy-registry&#10;    status2=$(docker inspect  -f &#34;&#123;&#123;.State.Running&#125;&#125;&#34; haproxy-registry)&#10;    if [ &#34;$&#123;status2&#125;&#34; = &#34;false&#34;  ]; then&#10;            service keepalived stop&#10;    fi&#10;fi</span><br></pre></td></tr></table></figure>
-<h4 id="启动keepalived服务">启动keepalived服务</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ service keepalived start</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install keepalived</span><br></pre></td></tr></table></figure>
+<p>####Master（221.228.86.4）服务器配置 /etc/keepalived/keepalived.conf</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">global_defs &#123;</span><br><span class="line">   notification_email &#123;</span><br><span class="line">       xieyaoyao@yy.com</span><br><span class="line">   &#125;</span><br><span class="line">   notification_email_from mail@example.org</span><br><span class="line">   smtp_server mail.yy.com</span><br><span class="line">   smtp_connect_timeout <span class="number">30</span></span><br><span class="line">   router_id LVS_DEVEL</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#监测haproxy进程状态，每2秒执行一次</span></span><br><span class="line">vrrp_script chk_haproxy &#123;</span><br><span class="line">    script <span class="string">"/usr/local/keepalived/chk_haproxy.sh"</span></span><br><span class="line">    interval <span class="number">2</span></span><br><span class="line">    weight <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    state MASTER <span class="comment">#标示状态为MASTER</span></span><br><span class="line">    interface eth0</span><br><span class="line">    virtual_router_id <span class="number">51</span></span><br><span class="line">    priority <span class="number">101</span>   <span class="comment">#MASTER权重要高于BACKUP</span></span><br><span class="line">    advert_int <span class="number">1</span></span><br><span class="line">    mcast_src_ip <span class="number">221.228</span>.<span class="number">86.4</span> <span class="comment">#Master服务器IP</span></span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_<span class="built_in">type</span> PASS <span class="comment">#主从服务器验证方式</span></span><br><span class="line">        auth_pass <span class="number">1111</span></span><br><span class="line">    &#125;</span><br><span class="line">    track_script &#123;</span><br><span class="line">        chk_haproxy <span class="comment">#监测haproxy进程状态</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#VIP</span></span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        <span class="number">221.228</span>.<span class="number">86.70</span> <span class="comment">#虚拟IP</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>####Backup（221.228.86.6）服务器上的配置 /etc/keepalived/keepalived.conf</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">global_defs &#123;</span><br><span class="line">   notification_email &#123;</span><br><span class="line">   user@example.com</span><br><span class="line">   &#125;</span><br><span class="line">   notification_email_from mail@example.org</span><br><span class="line">   smtp_server <span class="number">192.168</span>.x.x</span><br><span class="line">   smtp_connect_timeout <span class="number">30</span></span><br><span class="line">   router_id LVS_DEVEL</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#监测haproxy进程状态，每2秒执行一次</span></span><br><span class="line">vrrp_script chk_haproxy &#123;</span><br><span class="line">    script <span class="string">"/usr/local/keepalived/chk_haproxy.sh"</span></span><br><span class="line">    interval <span class="number">2</span></span><br><span class="line">    weight <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    state BACKUP <span class="comment">#状态为BACKUP</span></span><br><span class="line">    interface eth0</span><br><span class="line">    virtual_router_id <span class="number">51</span></span><br><span class="line">    priority <span class="number">100</span>  <span class="comment">#权重要低于MASTER</span></span><br><span class="line">    advert_int <span class="number">1</span></span><br><span class="line">    mcast_src_ip <span class="number">221.228</span>.<span class="number">86.6</span> <span class="comment">#Backup服务器的IP</span></span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_<span class="built_in">type</span> PASS</span><br><span class="line">        auth_pass <span class="number">1111</span></span><br><span class="line">    &#125;</span><br><span class="line">    track_script &#123;</span><br><span class="line">        chk_haproxy <span class="comment">#监测haproxy进程状态</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#VIP</span></span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        <span class="number">221.228</span>.<span class="number">86.70</span> <span class="comment">#虚拟IP</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>####chk_haproxy.sh内容 /usr/local/keepalived/chk_haproxy.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># author: weizhifeng</span></span><br><span class="line"><span class="comment"># description: </span></span><br><span class="line"><span class="comment"># 定时查看haproxy是否存在，如果不存在则启动haproxy，</span></span><br><span class="line"><span class="comment"># 如果启动失败，则停止keepalived</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line">status=$(docker inspect  <span class="operator">-f</span> <span class="string">"&#123;&#123;.State.Running&#125;&#125;"</span> haproxy-registry)</span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$&#123;status&#125;</span>"</span> = <span class="string">"false"</span> ]; <span class="keyword">then</span></span><br><span class="line">    docker start haproxy-registry</span><br><span class="line">    status2=$(docker inspect  <span class="operator">-f</span> <span class="string">"&#123;&#123;.State.Running&#125;&#125;"</span> haproxy-registry)</span><br><span class="line">    <span class="keyword">if</span> [ <span class="string">"<span class="variable">$&#123;status2&#125;</span>"</span> = <span class="string">"false"</span>  ]; <span class="keyword">then</span></span><br><span class="line">            service keepalived stop</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<p>####启动keepalived服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ service keepalived start</span><br></pre></td></tr></table></figure>
 </span>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2015/11/04/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
+        <div class="post-tags">
+          
+            <a href="/tags/Docker/" rel="tag">#Docker</a>
+          
+            <a href="/tags/Registry/" rel="tag">#Registry</a>
+          
         </div>
+      
+
       
 
       
@@ -437,21 +461,21 @@ VI">
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">1</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-count">2</span>
               <span class="site-state-item-name">分类</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-count">2</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -483,7 +507,7 @@ VI">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改docker_daemon_启动参数"><span class="nav-number">1.</span> <span class="nav-text">修改docker daemon 启动参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-_docker_registry_配置"><span class="nav-number"></span> <span class="nav-text">1. docker registry 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-_Haproxy_配置"><span class="nav-number"></span> <span class="nav-text">2. Haproxy 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建haproxy-registry容器"><span class="nav-number">1.</span> <span class="nav-text">创建haproxy-registry容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#清除Iptables_规则，目前让所有机器都能访问该proxy"><span class="nav-number">2.</span> <span class="nav-text">清除Iptables 规则，目前让所有机器都能访问该proxy</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-_设置keepalived_使用主备模式"><span class="nav-number"></span> <span class="nav-text">3. 设置keepalived 使用主备模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ubuntu_Keepalived安装"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu Keepalived安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Master（221-228-86-4）服务器配置_/etc/keepalived/keepalived-conf"><span class="nav-number">2.</span> <span class="nav-text">Master（221.228.86.4）服务器配置 /etc/keepalived/keepalived.conf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chk_haproxy-sh内容_/usr/local/keepalived/chk_haproxy-sh"><span class="nav-number">3.</span> <span class="nav-text">chk_haproxy.sh内容 /usr/local/keepalived/chk_haproxy.sh</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动keepalived服务"><span class="nav-number">4.</span> <span class="nav-text">启动keepalived服务</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#部署结构"><span class="nav-number">1.</span> <span class="nav-text">部署结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker_Registry_配置"><span class="nav-number">2.</span> <span class="nav-text">Docker Registry 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Haproxy_配置"><span class="nav-number">3.</span> <span class="nav-text">Haproxy 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Keepalived主备配置"><span class="nav-number">4.</span> <span class="nav-text">Keepalived主备配置</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
