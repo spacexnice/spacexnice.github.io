@@ -73,7 +73,7 @@ haproxy keepalived 备：221.228.86.5
 docker registry 1：    221.228.86.6
 docker registry 2：    221.228.86.67
 VI">
-<meta property="og:updated_time" content="2015-11-04T14:05:34.000Z">
+<meta property="og:updated_time" content="2015-11-05T07:09:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于haproxy和keepalived的高可用的私有docker registry">
 <meta name="twitter:description" content="本文用于搭建一个基于haproxy和keepalived的高可用的私有docker registry
@@ -316,6 +316,7 @@ VI">
 <li>VIP : 221.228.86.70 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">                    <span class="number">221.228</span>.<span class="number">86.100</span></span><br><span class="line">             +-----------VIP----------+   </span><br><span class="line">             |                        |</span><br><span class="line">             |                        |</span><br><span class="line">           Master                   Backup</span><br><span class="line">        <span class="number">221.228</span>.<span class="number">86.4</span>             <span class="number">221.228</span>.<span class="number">86.6</span></span><br><span class="line">        +----------+             +----------+</span><br><span class="line">        | HAProxy  |             | HAProxy  |</span><br><span class="line">        |keepalived|             |keepalived|</span><br><span class="line">        +----------+             +----------+</span><br><span class="line">             |  </span><br><span class="line">             v  </span><br><span class="line">    +--------+---------+ </span><br><span class="line">    |        |         |</span><br><span class="line">    |        |         |</span><br><span class="line">    v        v         v</span><br><span class="line">+------+  +------+  +------+</span><br><span class="line">| WEB1 |  | WEB2 |  | WEB3 |</span><br><span class="line">+------+  +------+  +------+</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<a id="more"></a>
 <h4 id="修改docker_daemon_启动参数">修改docker daemon 启动参数</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#20462;&#25913;/etc/default/docker&#25991;&#20214;&#65292;&#22312;DOCKER_OPTS=&#34;--insecure-registry vip:5000&#34;</span><br></pre></td></tr></table></figure>
 <h2 id="1-_docker_registry_配置">1. docker registry 配置</h2><ul>
 <li>参考 <a href="https://github.com/docker/distribution/blob/master/docs/configuration.md" target="_blank" rel="external">https://github.com/docker/distribution/blob/master/docs/configuration.md</a></li>
