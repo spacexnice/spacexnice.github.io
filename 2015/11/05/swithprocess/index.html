@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="进程切换," />
 
 
 
@@ -53,15 +53,22 @@
 
 
 
-<meta name="description" content="走在理想的路上">
-<meta property="og:type" content="website">
-<meta property="og:title" content="向未来致敬">
-<meta property="og:url" content="http://spacexnice.github.io/index.html">
+<meta name="description" content="进程切换流程进程的切换只会发生在内核精心定义的点上：schedule()函数。从本质上来说进程的切换由两个步骤完成，或两个标志性动作：  
+
+1.切换页全局目录来安装一个新的地址空间，cr3寄存器。这里请考虑这样一个问题，一旦页全局目录被切换成其他进程的，那么eip在取下一条指令时通过页表映射的方式还能正常的取到当前执行流的下一条指令吗？毕竟两个进程的页全局目录、页表大部分情况肯定会不一样。答案是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进程切换时的现场保护问题">
+<meta property="og:url" content="http://spacexnice.github.io/2015/11/05/swithprocess/index.html">
 <meta property="og:site_name" content="向未来致敬">
-<meta property="og:description" content="走在理想的路上">
+<meta property="og:description" content="进程切换流程进程的切换只会发生在内核精心定义的点上：schedule()函数。从本质上来说进程的切换由两个步骤完成，或两个标志性动作：  
+
+1.切换页全局目录来安装一个新的地址空间，cr3寄存器。这里请考虑这样一个问题，一旦页全局目录被切换成其他进程的，那么eip在取下一条指令时通过页表映射的方式还能正常的取到当前执行流的下一条指令吗？毕竟两个进程的页全局目录、页表大部分情况肯定会不一样。答案是">
+<meta property="og:updated_time" content="2015-11-05T15:00:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="向未来致敬">
-<meta name="twitter:description" content="走在理想的路上">
+<meta name="twitter:title" content="进程切换时的现场保护问题">
+<meta name="twitter:description" content="进程切换流程进程的切换只会发生在内核精心定义的点上：schedule()函数。从本质上来说进程的切换由两个步骤完成，或两个标志性动作：  
+
+1.切换页全局目录来安装一个新的地址空间，cr3寄存器。这里请考虑这样一个问题，一旦页全局目录被切换成其他进程的，那么eip在取下一条指令时通过页表映射的方式还能正常的取到当前执行流的下一条指令吗？毕竟两个进程的页全局目录、页表大部分情况肯定会不一样。答案是">
 
 
 
@@ -73,7 +80,7 @@
   };
 </script>
 
-  <title> 向未来致敬 </title>
+  <title> 进程切换时的现场保护问题 | 向未来致敬 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -104,9 +111,7 @@
 
 
 
-  <div class="container one-column 
-   page-home 
-">
+  <div class="container one-column page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -224,24 +229,9 @@
       <div class="main-inner">
         <div id="content" class="content">
           
-  <section id="posts" class="posts-expand">
 
+  <div id="posts" class="posts-expand">
     
-
-    
-    
-      
-      
-        
-        
-        
-      
-
-      
-    
-
-    
-      
 
   
   
@@ -261,10 +251,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2015/11/05/swithprocess/" itemprop="url">
-                  进程切换时的现场保护问题
-                </a>
+                进程切换时的现场保护问题
               
             
           </h1>
@@ -331,279 +318,55 @@
       
 
       
-        
-          <h2 id="进程切换流程">进程切换流程</h2><p>进程的切换只会发生在内核精心定义的点上：schedule()函数。从本质上来说进程的切换由两个步骤完成，或两个标志性动作：  </p>
+        <span itemprop="articleBody"><h2 id="进程切换流程">进程切换流程</h2><p>进程的切换只会发生在内核精心定义的点上：schedule()函数。从本质上来说进程的切换由两个步骤完成，或两个标志性动作：  </p>
 <ul>
 <li>1.切换页全局目录来安装一个新的地址空间，cr3寄存器。<br>这里请考虑这样一个问题，一旦页全局目录被切换成其他进程的，那么eip在取下一条指令时通过页表映射的方式还能正常的取到当前执行流的下一条指令吗？毕竟两个进程的页全局目录、页表大部分情况肯定会不一样。<br>答案是：进程切换发生在内核态，所有代码的引用的地址空间大于0xC0000000,这部分页表属于主内核页表，而所有进程具有相同的主内核页表（至于为何具有相同主内核也表，见下一节），所以指令可以正常取并执行。  </li>
 <li>2.切换内核态堆栈与硬件上下文。<br>那么切换时的现场保护问题，尤其是SS段寄存器和esp寄存器的保护 。由于进程的切换发生在内核态，通常在进入内核态中断发生时，硬件上下文会被自动保存。</li>
 </ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/11/05/swithprocess/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
+<a id="more"></a>
+<h2 id="切换问题">切换问题</h2><p>一直有一个疑问，在中断发生时上下文切换的时候会发生栈的切换，并且把原来的栈段寄存器SS和esp寄存器的值一起保存到新的内核栈段寄存器SS和esp寄存器指向的内核栈，而且这个时候还不能使用任何的其他寄存器辅助（因为硬件上下文还没有保存，任何对寄存器的引用都会破坏进程的上下文），并且任何的push操作都会改变当前的esp，这个切换过程究竟是如何实现的？</p>
+<h2 id="答案">答案</h2><p>MDD，硬件上下文的切换是硬件自动完成的，不需要软件做。软件做的只是提供好中断号、idtr寄存器、gdtr寄存器、tr寄存器的值。<br>中断发生时，硬件做了一系列工作，包含获取中断号，从idtr寄存器根据中断号找到中断处理程序入口地址CS：EIP，根据CS及gdtr寄存器找到中断入口代码的段基址及特权位，判断如果特权位发生变化则需要切换到内核栈，切换的过程是从tr寄存器找到当前进程的TSS段，然后把TSS段里保存的当前进程的内核栈SS：ESP放入当前SS：ESP中，并将原来的SS：ESP值push到当前栈中，然后push CS,EIP,EFLAG等寄存器。注意这些都是硬件完成的。而通用寄存器的保护工作应该是由中断处理程序ISR做的。</p>
+<pre><code>参见《深入理解Linux内核》
+</code></pre></span>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/11/05/keyjump/" itemprop="url">
-                  关于从x86实模式到保护模式的关键一跳的指令连续执行问题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-11-05T22:06:15+08:00" content="2015-11-05">
-              2015-11-05
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/操作系统/" itemprop="url" rel="index">
-                    <span itemprop="name">操作系统</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/操作系统/Linux内核/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux内核</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
+            <a href="/tags/进程切换/" rel="tag">#进程切换</a>
           
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/11/05/keyjump/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/05/keyjump/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
         </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
       
 
       
-        
-          <h2 id="问题描述">问题描述</h2><p>关于实模式与保护模式的基础可以参考《深入理解linux内核》，或相关博文。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>.实模式下的寻址方式</span><br><span class="line">      cs &lt;&lt;<span class="number">4</span> + ip</span><br><span class="line"><span class="number">2</span>.保护模式下的寻址方式</span><br><span class="line">      base(index(cs)) +eip</span><br><span class="line"><span class="number">3</span>.x86实模式进入保护模式的代码</span><br><span class="line">       lgdt  GdtPtr        //加载 GDTR</span><br><span class="line">       cli                       //关中断</span><br><span class="line">                                 //打开地址线A20等</span><br><span class="line">                                 //下面准备切换到保护模式</span><br><span class="line">       mov   %cr0，%eax</span><br><span class="line">       or       <span class="number">0</span>x1,%eax</span><br><span class="line">       mov   %eax,%cr0 //将cr0的PE位置<span class="number">1</span>，进入保护模式</span><br><span class="line"></span><br><span class="line">       jmp   dword SelectorSode32:<span class="number">0</span>x0</span><br></pre></td></tr></table></figure>
-<p><strong>问题:</strong><br>当打开cr0的PE位的瞬间，处理器进入保护模式，寻址方式改变。此时cs的值并没有改变，并且打开cr0瞬间处理器对cs的解释方式完全不一样，那么问题来了，如何确保在进入保护模式后下一条指令被顺利执行？</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/11/05/keyjump/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/05/keyjump/" rel="next" title="关于从x86实模式到保护模式的关键一跳的指令连续执行问题">
+                <i class="fa fa-chevron-left"></i> 关于从x86实模式到保护模式的关键一跳的指令连续执行问题
+              </a>
+            
           </div>
-        
-      
-    </div>
 
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+          <div class="post-nav-prev post-nav-item">
             
-            
-              
-                
-                <a class="post-title-link" href="/2015/11/04/highavailableregistry/" itemprop="url">
-                  基于haproxy和keepalived的高可用的私有docker registry
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-11-04T22:02:11+08:00" content="2015-11-04">
-              2015-11-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/容器/" itemprop="url" rel="index">
-                    <span itemprop="name">容器</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/容器/Docker/" itemprop="url" rel="index">
-                    <span itemprop="name">Docker</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/11/04/highavailableregistry/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/04/highavailableregistry/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
       
 
       
-        
-          <p>本文用于搭建一个基于haproxy和keepalived的高可用的私有docker registry</p>
-<h2 id="部署结构">部署结构</h2><ul>
-<li>haproxy keepalived 主：221.228.86.4</li>
-<li>haproxy keepalived 备：221.228.86.5</li>
-<li>docker registry 1：    221.228.86.6</li>
-<li>docker registry 2：    221.228.86.67</li>
-<li>VIP : 221.228.86.70 </li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">                    <span class="number">221.228</span>.<span class="number">86.100</span></span><br><span class="line">             +-----------VIP----------+   </span><br><span class="line">             |                        |</span><br><span class="line">             |                        |</span><br><span class="line">           Master                   Backup</span><br><span class="line">        <span class="number">221.228</span>.<span class="number">86.4</span>             <span class="number">221.228</span>.<span class="number">86.6</span></span><br><span class="line">        +----------+             +----------+</span><br><span class="line">        | HAProxy  |             | HAProxy  |</span><br><span class="line">        |keepalived|             |keepalived|</span><br><span class="line">        +----------+             +----------+</span><br><span class="line">             |  </span><br><span class="line">             v  </span><br><span class="line">    +--------+---------+ </span><br><span class="line">    |        |         |</span><br><span class="line">    |        |         |</span><br><span class="line">    v        v         v</span><br><span class="line">+------+  +------+  +------+</span><br><span class="line">| WEB1 |  | WEB2 |  | WEB3 |</span><br><span class="line">+------+  +------+  +------+</span><br></pre></td></tr></table></figure>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/11/04/highavailableregistry/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
 
-  </section>
-
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
         </div>
@@ -612,6 +375,14 @@
 
 
         
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/11/05/swithprocess/"
+           data-title="进程切换时的现场保护问题" data-url="http://spacexnice.github.io/2015/11/05/swithprocess/">
+      </div>
+    
+  </div>
+
 
       </div>
 
@@ -632,8 +403,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" src="/uploads/headpic.jpg" alt="spacexnice" itemprop="image"/>
           <p class="site-author-name" itemprop="name">spacexnice</p>
@@ -696,6 +476,23 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程切换流程"><span class="nav-number">1.</span> <span class="nav-text">进程切换流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#切换问题"><span class="nav-number">2.</span> <span class="nav-text">切换问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#答案"><span class="nav-number">3.</span> <span class="nav-text">答案</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
       
 
     </div>
@@ -783,6 +580,167 @@
   <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
 
   <script type="text/javascript" src="/js/bootstrap.js"></script>
 
