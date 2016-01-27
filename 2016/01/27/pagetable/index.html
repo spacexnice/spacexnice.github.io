@@ -37,7 +37,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="保护模式,实模式," />
+  <meta name="keywords" content="页表," />
 
 
 
@@ -53,19 +53,16 @@
 
 
 
-<meta name="description" content="问题描述关于实模式与保护模式的基础可以参考《深入理解linux内核》，或相关博文。
-12345678910111213141.实模式下的寻址方式      cs &amp;lt;&amp;lt;4 + ip2.保护模式下的寻址方式      base(index(cs)) +eip3.x86实模式进入保护模式的代码       lgdt  GdtPtr        //加载 GDTR       cli">
+<meta name="description" content="问题一：每个用户进程都有自己的页全局目录及页表，然后内核代表进程在内核态执行，此时如果内核代码修改了内核页表，那么这些修改是如何传递到其他用户进程的？毕竟所有用户进程维护自己的页表，同时关于内核线性空间的页表还必须相同，这个是如何做到的？">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于从x86实模式到保护模式的关键一跳的指令连续执行问题">
-<meta property="og:url" content="http://spacexnice.github.io/2015/11/05/keyjump/index.html">
+<meta property="og:title" content="内核页表的传递">
+<meta property="og:url" content="http://spacexnice.github.io/2016/01/27/pagetable/index.html">
 <meta property="og:site_name" content="向未来致敬">
-<meta property="og:description" content="问题描述关于实模式与保护模式的基础可以参考《深入理解linux内核》，或相关博文。
-12345678910111213141.实模式下的寻址方式      cs &amp;lt;&amp;lt;4 + ip2.保护模式下的寻址方式      base(index(cs)) +eip3.x86实模式进入保护模式的代码       lgdt  GdtPtr        //加载 GDTR       cli">
-<meta property="og:updated_time" content="2015-11-05T14:30:41.000Z">
+<meta property="og:description" content="问题一：每个用户进程都有自己的页全局目录及页表，然后内核代表进程在内核态执行，此时如果内核代码修改了内核页表，那么这些修改是如何传递到其他用户进程的？毕竟所有用户进程维护自己的页表，同时关于内核线性空间的页表还必须相同，这个是如何做到的？">
+<meta property="og:updated_time" content="2016-01-27T01:44:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于从x86实模式到保护模式的关键一跳的指令连续执行问题">
-<meta name="twitter:description" content="问题描述关于实模式与保护模式的基础可以参考《深入理解linux内核》，或相关博文。
-12345678910111213141.实模式下的寻址方式      cs &amp;lt;&amp;lt;4 + ip2.保护模式下的寻址方式      base(index(cs)) +eip3.x86实模式进入保护模式的代码       lgdt  GdtPtr        //加载 GDTR       cli">
+<meta name="twitter:title" content="内核页表的传递">
+<meta name="twitter:description" content="问题一：每个用户进程都有自己的页全局目录及页表，然后内核代表进程在内核态执行，此时如果内核代码修改了内核页表，那么这些修改是如何传递到其他用户进程的？毕竟所有用户进程维护自己的页表，同时关于内核线性空间的页表还必须相同，这个是如何做到的？">
 
 
 
@@ -77,7 +74,7 @@
   };
 </script>
 
-  <title> 关于从x86实模式到保护模式的关键一跳的指令连续执行问题 | 向未来致敬 </title>
+  <title> 内核页表的传递 | 向未来致敬 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -248,7 +245,7 @@
             
             
               
-                关于从x86实模式到保护模式的关键一跳的指令连续执行问题
+                内核页表的传递
               
             
           </h1>
@@ -257,8 +254,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-11-05T22:06:15+08:00" content="2015-11-05">
-              2015-11-05
+            <time itemprop="dateCreated" datetime="2016-01-27T09:24:44+08:00" content="2016-01-27">
+              2016-01-27
             </time>
           </span>
 
@@ -295,8 +292,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/05/keyjump/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/05/keyjump/" itemprop="commentsCount"></span>
+                <a href="/2016/01/27/pagetable/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/27/pagetable/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -315,20 +312,14 @@
       
 
       
-        <span itemprop="articleBody"><h2 id="问题描述">问题描述</h2><p>关于实模式与保护模式的基础可以参考《深入理解linux内核》，或相关博文。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>.实模式下的寻址方式</span><br><span class="line">      cs &lt;&lt;<span class="number">4</span> + ip</span><br><span class="line"><span class="number">2</span>.保护模式下的寻址方式</span><br><span class="line">      base(index(cs)) +eip</span><br><span class="line"><span class="number">3</span>.x86实模式进入保护模式的代码</span><br><span class="line">       lgdt  GdtPtr        //加载 GDTR</span><br><span class="line">       cli                       //关中断</span><br><span class="line">                                 //打开地址线A20等</span><br><span class="line">                                 //下面准备切换到保护模式</span><br><span class="line">       mov   %cr0，%eax</span><br><span class="line">       or       <span class="number">0</span>x1,%eax</span><br><span class="line">       mov   %eax,%cr0 //将cr0的PE位置<span class="number">1</span>，进入保护模式</span><br><span class="line"></span><br><span class="line">       jmp   dword SelectorSode32:<span class="number">0</span>x0</span><br></pre></td></tr></table></figure>
-<p><strong>问题:</strong><br>当打开cr0的PE位的瞬间，处理器进入保护模式，寻址方式改变。此时cs的值并没有改变，并且打开cr0瞬间处理器对cs的解释方式完全不一样，那么问题来了，如何确保在进入保护模式后下一条指令被顺利执行？</p>
+        <span itemprop="articleBody"><h2 id="问题一：">问题一：</h2><p>每个用户进程都有自己的页全局目录及页表，然后内核代表进程在内核态执行，此时如果内核代码修改了内核页表，那么这些修改是如何传递到其他用户进程的？毕竟所有用户进程维护自己的页表，同时关于内核线性空间的页表还必须相同，这个是如何做到的？</p>
 <a id="more"></a>
-<h2 id="解决过程">解决过程</h2><p>你可能会想  </p>
-<ul>
-<li>1.是不是cs段寄存器的内容足够特别，使得无论此时采用实模式的寻址方式还是保护模式的寻址方式所解释出来的地址相等？然后你会发现其实这个cs目前值没有任何规律，完全不对头。</li>
-<li>2.翻一翻x86指令集，发现x86规定，在cpu执行长跳转指令的时候才会自动改变cs寄存器的值。然后你会去找，是不是前后有哪些地方执行过长跳转指令？然后没找到。</li>
-<li>3.然后没招的时候你还可能想是不是并不一定就是接着下一条指令执行呢？然后就真的按照当前cs段的值以实模式的方式计算一下下条指令会在那个地方，最后发现根本行不通。</li>
-</ul>
-<p>####图书馆、百度、Google齐上阵后发现</p>
-<h2 id="问题答案">问题答案</h2><p>段寄存器后面都有隐藏的高速缓冲寄存器，当cs寄存器值被更新时，这个高速缓冲寄存器的值会根据当时的寻址方式更新，比如实模式下就是cs&lt;&lt;4后放入高速缓冲寄存器，等需要取指令的时候就直接取高速缓冲寄存器的值与eip相加即可，并不会真的再去cs段寄存器找这个值然后做像保护模式下的寻址方式那样推导。这样就解释了上面的情况，虽然寻址方式改变了，但是cs段寄存器的值没变，高速缓冲寄存器的值就不会变，基址仍然是实模式时的值，从而实际上计算出来的还是实模式的地址，保证了指令流的持续执行。内核在等到切换准备就绪的时候就会执行一个长跳转指令来刷新cs段寄存器的值，从而真的跳转导保护模式下了。</p>
-<pre><code>可以参考《x86汇编语言：从实模式到保护模式》，里面也做了相关描述。
-</code></pre></span>
+<p>答案是:</p>
+<p>map_vm_area()并不触及当前进程页表，而是直接修改init进程页表也就是主内核页表。一旦内核代表当前进程访问非连续内存区是，缺页发生，缺页处理程序会检查该地址是否是内核地址，并且该线性地址是否在主内核页表中。一旦处理程序发现一个主内核页表的有一个该线性地址的非空项，则将该项拷贝到当前进程的页表中。</p>
+<h2 id="问题二：">问题二：</h2><p>那么问题又来了，第一次内核访问非连续存储区的时候，由于进程页表的相应项为空会发生缺页异常，但是如果此后主内核页表项被修改，然后内核再次代表该进程访问非连续物理内存区的时候，由于页表已经被拷贝过旧的值，因此不会发生缺页异常，因此就会访问都错误的非连续的内存区，是这样么？</p>
+<p>答案是：</p>
+<p>因为在上一步的页表拷贝中，只拷贝了页全局目录的部分项，因此当前进程与主内核页表共享相同的页表项，并且这些页表项一旦被分配就不会被回收，但可以修改。这样所有对主内核页表的修改都会传递到当前进程。如果进程试图访问一个已经被释放发非连续内存区也会引发缺页异</p>
+</span>
       
     </div>
 
@@ -336,9 +327,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/保护模式/" rel="tag">#保护模式</a>
-          
-            <a href="/tags/实模式/" rel="tag">#实模式</a>
+            <a href="/tags/页表/" rel="tag">#页表</a>
           
         </div>
       
@@ -347,17 +336,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/04/highavailableregistry/" rel="next" title="基于haproxy和keepalived的高可用的私有docker registry">
-                <i class="fa fa-chevron-left"></i> 基于haproxy和keepalived的高可用的私有docker registry
+              <a href="/2015/11/05/swithprocess/" rel="next" title="进程切换时的现场保护问题">
+                <i class="fa fa-chevron-left"></i> 进程切换时的现场保护问题
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/11/05/swithprocess/" rel="prev" title="进程切换时的现场保护问题">
-                进程切换时的现场保护问题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -384,8 +369,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/05/keyjump/"
-           data-title="关于从x86实模式到保护模式的关键一跳的指令连续执行问题" data-url="http://spacexnice.github.io/2015/11/05/keyjump/">
+      <div class="ds-thread" data-thread-key="2016/01/27/pagetable/"
+           data-title="内核页表的传递" data-url="http://spacexnice.github.io/2016/01/27/pagetable/">
       </div>
     
   </div>
@@ -493,7 +478,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决过程"><span class="nav-number">2.</span> <span class="nav-text">解决过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题答案"><span class="nav-number">3.</span> <span class="nav-text">问题答案</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一："><span class="nav-number">1.</span> <span class="nav-text">问题一：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二："><span class="nav-number">2.</span> <span class="nav-text">问题二：</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
