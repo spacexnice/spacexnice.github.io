@@ -1,8 +1,14 @@
 <!doctype html>
-<html class="theme-next   use-motion ">
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
 
@@ -21,20 +27,48 @@
 
 
 
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
 
   
-    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Docker,Registry," />
@@ -46,7 +80,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
 
 
 
@@ -62,8 +96,8 @@ docker registry 2：    221.228.86.67
 VIP :">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于haproxy和keepalived的高可用的私有docker registry">
-<meta property="og:url" content="http://spacexnice.github.io/2015/11/04/highavailableregistry/index.html">
-<meta property="og:site_name" content="向未来致敬">
+<meta property="og:url" content="http://yoursite.com/2015/11/04/highavailableregistry/index.html">
+<meta property="og:site_name" content="理想的路上">
 <meta property="og:description" content="本文用于搭建一个基于haproxy和keepalived的高可用的私有docker registry
 部署结构
 haproxy keepalived 主：221.228.86.4
@@ -71,7 +105,7 @@ haproxy keepalived 备：221.228.86.5
 docker registry 1：    221.228.86.6
 docker registry 2：    221.228.86.67
 VIP :">
-<meta property="og:updated_time" content="2015-11-05T14:05:07.000Z">
+<meta property="og:updated_time" content="2017-03-05T14:15:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于haproxy和keepalived的高可用的私有docker registry">
 <meta name="twitter:description" content="本文用于搭建一个基于haproxy和keepalived的高可用的私有docker registry
@@ -84,81 +118,101 @@ VIP :">
 
 
 
-<script type="text/javascript" id="hexo.configuration">
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
   var CONFIG = {
+    root: '/',
     scheme: 'Mist',
-    sidebar: 'post',
-    motion: true
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
   };
 </script>
 
-  <title> 基于haproxy和keepalived的高可用的私有docker registry | 向未来致敬 </title>
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/11/04/highavailableregistry/"/>
+
+
+
+
+
+  <title> 基于haproxy和keepalived的高可用的私有docker registry | 理想的路上 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
-  <!--[if lte IE 8]>
-  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
-    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
-           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
-           style='margin-left:auto;margin-right:auto;display: block;'/>
-    </a>
-  </div>
-<![endif]-->
   
 
 
 
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?d432a073c75a06bd4ad22f02254fd829";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
 
 
 
 
-  <div class="container one-column page-post-detail">
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">向未来致敬</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">理想的路上</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一路前行</p>
+      
   </div>
-  <p class="site-subtitle">走走停停</p>
-</div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
 <nav class="site-nav">
   
 
   
-    <ul id="menu" class="menu menu-left">
+    <ul id="menu" class="menu">
       
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
           </a>
@@ -168,7 +222,7 @@ VIP :">
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
             分类
           </a>
@@ -178,7 +232,7 @@ VIP :">
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
             关于
           </a>
@@ -188,7 +242,7 @@ VIP :">
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
           </a>
@@ -198,7 +252,7 @@ VIP :">
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
           </a>
@@ -206,46 +260,26 @@ VIP :">
       
 
       
-      
     </ul>
   
 
   
-    <div class="site-search">
-      
-  
-  <form class="site-search-form">
-    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
-  </form>
-
-
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install', 'spacexnice','2.0.0');
-</script>
-
-
-
-    </div>
-  
 </nav>
+
+
 
  </div>
     </header>
 
     <main id="main" class="main">
       <div class="main-inner">
-        <div id="content" class="content">
-          
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
     
 
-  
   
 
   
@@ -253,6 +287,17 @@ VIP :">
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/11/04/highavailableregistry/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="spacexnice">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/headpic.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="理想的路上">
+    </span>
 
     
       <header class="post-header">
@@ -271,17 +316,36 @@ VIP :">
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-11-04T22:02:11+08:00" content="2015-11-04">
-              2015-11-04
-            </time>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-11-04T22:02:11+08:00">
+                2015-11-04
+              </time>
+            
+
+            
+
+            
           </span>
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/容器/" itemprop="url" rel="index">
                     <span itemprop="name">容器</span>
                   </a>
@@ -291,9 +355,8 @@ VIP :">
                 
                   ， 
                 
-
               
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/容器/Docker/" itemprop="url" rel="index">
                     <span itemprop="name">Docker</span>
                   </a>
@@ -301,7 +364,6 @@ VIP :">
 
                 
                 
-
               
             </span>
           
@@ -309,12 +371,33 @@ VIP :">
           
             
               <span class="post-comments-count">
-                &nbsp; | &nbsp;
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
                 <a href="/2015/11/04/highavailableregistry/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/04/highavailableregistry/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/04/highavailableregistry/" itemprop="commentCount"></span>
                 </a>
               </span>
             
+          
+
+          
+          
+             <span id="/2015/11/04/highavailableregistry/" class="leancloud_visitors" data-flag-title="基于haproxy和keepalived的高可用的私有docker registry">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
           
 
           
@@ -324,13 +407,13 @@ VIP :">
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
-        <span itemprop="articleBody"><p>本文用于搭建一个基于haproxy和keepalived的高可用的私有docker registry</p>
+        <p>本文用于搭建一个基于haproxy和keepalived的高可用的私有docker registry</p>
 <h2 id="部署结构">部署结构</h2><ul>
 <li>haproxy keepalived 主：221.228.86.4</li>
 <li>haproxy keepalived 备：221.228.86.5</li>
@@ -340,7 +423,7 @@ VIP :">
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">                    <span class="number">221.228</span>.<span class="number">86.100</span></span><br><span class="line">             +-----------VIP----------+   </span><br><span class="line">             |                        |</span><br><span class="line">             |                        |</span><br><span class="line">           Master                   Backup</span><br><span class="line">        <span class="number">221.228</span>.<span class="number">86.4</span>             <span class="number">221.228</span>.<span class="number">86.6</span></span><br><span class="line">        +----------+             +----------+</span><br><span class="line">        | HAProxy  |             | HAProxy  |</span><br><span class="line">        |keepalived|             |keepalived|</span><br><span class="line">        +----------+             +----------+</span><br><span class="line">             |  </span><br><span class="line">             v  </span><br><span class="line">    +--------+---------+ </span><br><span class="line">    |        |         |</span><br><span class="line">    |        |         |</span><br><span class="line">    v        v         v</span><br><span class="line">+------+  +------+  +------+</span><br><span class="line">| WEB1 |  | WEB2 |  | WEB3 |</span><br><span class="line">+------+  +------+  +------+</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<p>####修改docker daemon 启动参数<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">修改/etc/default/docker文件，在DOCKER_OPTS=<span class="string">"--insecure-registry vip:5000"</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="修改docker_daemon_启动参数">修改docker daemon 启动参数</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">修改/etc/default/docker文件，在DOCKER_OPTS=<span class="string">"--insecure-registry vip:5000"</span></span><br></pre></td></tr></table></figure>
 <h2 id="Docker_Registry_配置">Docker Registry 配置</h2><ul>
 <li>参考 <a href="https://github.com/docker/distribution/blob/master/docs/configuration.md" target="_blank" rel="external">https://github.com/docker/distribution/blob/master/docs/configuration.md</a></li>
 <li>221.228.86.5 221.228.86.67</li>
@@ -361,36 +444,49 @@ VIP :">
 <li>在haproxy 主备上分别执行下面命令,在/var/lib/hadporxy/目录下建立haproxy.cfg配置文件,内容如下:</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">global</span><br><span class="line">    <span class="built_in">log</span> <span class="number">127.0</span>.<span class="number">0.1</span> <span class="built_in">local</span>3 info</span><br><span class="line">    maxconn <span class="number">4096</span></span><br><span class="line">    nbproc <span class="number">1</span></span><br><span class="line">    pidfile /var/lib/haproxy/haproxy.pid</span><br><span class="line">defaults</span><br><span class="line">    maxconn <span class="number">2000</span></span><br><span class="line">    timeout connect <span class="number">5000</span></span><br><span class="line">    timeout client <span class="number">30000</span></span><br><span class="line">    timeout server <span class="number">30000</span></span><br><span class="line">    mode http</span><br><span class="line">    stats uri /admin?stats</span><br><span class="line">    option forwardfor</span><br><span class="line">frontend http_server</span><br><span class="line">    <span class="built_in">bind</span> :<span class="number">5000</span></span><br><span class="line">    <span class="built_in">log</span> global</span><br><span class="line">    default_backend docker-registry</span><br><span class="line">    <span class="comment">#acl test hdr_dom(host) -i test.domain.com</span></span><br><span class="line">    <span class="comment">#use_backend cache_test if test</span></span><br><span class="line">backend docker-registry</span><br><span class="line">    <span class="comment">#balance roundrobin</span></span><br><span class="line">    balance <span class="built_in">source</span></span><br><span class="line">    option httpchk GET /v2/ HTTP/<span class="number">1.1</span>\r\nHost:<span class="number">221.228</span>.<span class="number">86.6</span></span><br><span class="line">    server inst1 <span class="number">221.228</span>.<span class="number">86.5</span>:<span class="number">5000</span> check inter <span class="number">5000</span> fall <span class="number">3</span></span><br><span class="line">    server inst2 <span class="number">221.228</span>.<span class="number">86.67</span>:<span class="number">5000</span> check inter <span class="number">5000</span> fall <span class="number">3</span></span><br><span class="line"><span class="comment">#HAProxy管理页面 </span></span><br><span class="line">listen admin_<span class="built_in">stat</span></span><br><span class="line">    <span class="built_in">bind</span> *:<span class="number">1158</span>                    <span class="comment">#管理页面端口</span></span><br><span class="line">    mode http                        </span><br><span class="line">    stats refresh <span class="number">10</span>s                <span class="comment">#自动刷新时间</span></span><br><span class="line">    stats uri /haproxy                 <span class="comment">#页面名称</span></span><br><span class="line">    stats realm Haproxy\ Statistics     <span class="comment">#登录提示</span></span><br><span class="line">    stats auth admin:admin    <span class="comment">#帐号密码</span></span><br><span class="line">    stats hide-version </span><br><span class="line">stats admin <span class="keyword">if</span> TRUE</span><br></pre></td></tr></table></figure>
-<p>####创建haproxy-registry容器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /var/lib/haproxy</span><br><span class="line">$ docker run <span class="operator">-d</span> --name haproxy-registry --net=host -v /var/lib/haproxy/haproxy.cfg:/usr/<span class="built_in">local</span>/etc/haproxy/haproxy.cfg:ro haproxy:<span class="number">1.5</span></span><br></pre></td></tr></table></figure>
-<p>####清除Iptables 规则，目前让所有机器都能访问该proxy</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ iptables -D INPUT <span class="operator">-d</span> <span class="number">221.228</span>.<span class="number">86.5</span>/<span class="number">32</span> -m comment --comment sigma -j DROP</span><br></pre></td></tr></table></figure>
+<h4 id="创建haproxy-registry容器">创建haproxy-registry容器</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /var/lib/haproxy</span><br><span class="line">$ docker run <span class="operator">-d</span> --name haproxy-registry --net=host -v /var/lib/haproxy/haproxy.cfg:/usr/<span class="built_in">local</span>/etc/haproxy/haproxy.cfg:ro haproxy:<span class="number">1.5</span></span><br></pre></td></tr></table></figure>
+<h4 id="清除Iptables_规则，目前让所有机器都能访问该proxy">清除Iptables 规则，目前让所有机器都能访问该proxy</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ iptables -D INPUT <span class="operator">-d</span> <span class="number">221.228</span>.<span class="number">86.5</span>/<span class="number">32</span> -m comment --comment sigma -j DROP</span><br></pre></td></tr></table></figure>
 <h2 id="Keepalived主备配置">Keepalived主备配置</h2><p>使用Keeplalived管理浮动IP</p>
 <ul>
-<li>在221.228.86.4 221.228.86.6机器上同时安装keepalived，keepalived配置文件区别设置<br>####Ubuntu Keepalived安装</li>
+<li>在221.228.86.4 221.228.86.6机器上同时安装keepalived，keepalived配置文件区别设置<h4 id="Ubuntu_Keepalived安装">Ubuntu Keepalived安装</h4></li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install keepalived</span><br></pre></td></tr></table></figure>
-<p>####Master（221.228.86.4）服务器配置 /etc/keepalived/keepalived.conf</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">global_defs &#123;</span><br><span class="line">   notification_email &#123;</span><br><span class="line">       xieyaoyao@yy.com</span><br><span class="line">   &#125;</span><br><span class="line">   notification_email_from mail@example.org</span><br><span class="line">   smtp_server mail.yy.com</span><br><span class="line">   smtp_connect_timeout <span class="number">30</span></span><br><span class="line">   router_id LVS_DEVEL</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#监测haproxy进程状态，每2秒执行一次</span></span><br><span class="line">vrrp_script chk_haproxy &#123;</span><br><span class="line">    script <span class="string">"/usr/local/keepalived/chk_haproxy.sh"</span></span><br><span class="line">    interval <span class="number">2</span></span><br><span class="line">    weight <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    state MASTER <span class="comment">#标示状态为MASTER</span></span><br><span class="line">    interface eth0</span><br><span class="line">    virtual_router_id <span class="number">51</span></span><br><span class="line">    priority <span class="number">101</span>   <span class="comment">#MASTER权重要高于BACKUP</span></span><br><span class="line">    advert_int <span class="number">1</span></span><br><span class="line">    mcast_src_ip <span class="number">221.228</span>.<span class="number">86.4</span> <span class="comment">#Master服务器IP</span></span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_<span class="built_in">type</span> PASS <span class="comment">#主从服务器验证方式</span></span><br><span class="line">        auth_pass <span class="number">1111</span></span><br><span class="line">    &#125;</span><br><span class="line">    track_script &#123;</span><br><span class="line">        chk_haproxy <span class="comment">#监测haproxy进程状态</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#VIP</span></span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        <span class="number">221.228</span>.<span class="number">86.70</span> <span class="comment">#虚拟IP</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>####Backup（221.228.86.6）服务器上的配置 /etc/keepalived/keepalived.conf</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">global_defs &#123;</span><br><span class="line">   notification_email &#123;</span><br><span class="line">   user@example.com</span><br><span class="line">   &#125;</span><br><span class="line">   notification_email_from mail@example.org</span><br><span class="line">   smtp_server <span class="number">192.168</span>.x.x</span><br><span class="line">   smtp_connect_timeout <span class="number">30</span></span><br><span class="line">   router_id LVS_DEVEL</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#监测haproxy进程状态，每2秒执行一次</span></span><br><span class="line">vrrp_script chk_haproxy &#123;</span><br><span class="line">    script <span class="string">"/usr/local/keepalived/chk_haproxy.sh"</span></span><br><span class="line">    interval <span class="number">2</span></span><br><span class="line">    weight <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    state BACKUP <span class="comment">#状态为BACKUP</span></span><br><span class="line">    interface eth0</span><br><span class="line">    virtual_router_id <span class="number">51</span></span><br><span class="line">    priority <span class="number">100</span>  <span class="comment">#权重要低于MASTER</span></span><br><span class="line">    advert_int <span class="number">1</span></span><br><span class="line">    mcast_src_ip <span class="number">221.228</span>.<span class="number">86.6</span> <span class="comment">#Backup服务器的IP</span></span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_<span class="built_in">type</span> PASS</span><br><span class="line">        auth_pass <span class="number">1111</span></span><br><span class="line">    &#125;</span><br><span class="line">    track_script &#123;</span><br><span class="line">        chk_haproxy <span class="comment">#监测haproxy进程状态</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#VIP</span></span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        <span class="number">221.228</span>.<span class="number">86.70</span> <span class="comment">#虚拟IP</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>####chk_haproxy.sh内容 /usr/local/keepalived/chk_haproxy.sh</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># author: weizhifeng</span></span><br><span class="line"><span class="comment"># description: </span></span><br><span class="line"><span class="comment"># 定时查看haproxy是否存在，如果不存在则启动haproxy，</span></span><br><span class="line"><span class="comment"># 如果启动失败，则停止keepalived</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line">status=$(docker inspect  <span class="operator">-f</span> <span class="string">"&#123;&#123;.State.Running&#125;&#125;"</span> haproxy-registry)</span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$&#123;status&#125;</span>"</span> = <span class="string">"false"</span> ]; <span class="keyword">then</span></span><br><span class="line">    docker start haproxy-registry</span><br><span class="line">    status2=$(docker inspect  <span class="operator">-f</span> <span class="string">"&#123;&#123;.State.Running&#125;&#125;"</span> haproxy-registry)</span><br><span class="line">    <span class="keyword">if</span> [ <span class="string">"<span class="variable">$&#123;status2&#125;</span>"</span> = <span class="string">"false"</span>  ]; <span class="keyword">then</span></span><br><span class="line">            service keepalived stop</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-<p>####启动keepalived服务</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ service keepalived start</span><br></pre></td></tr></table></figure>
-</span>
+<h4 id="Master（221-228-86-4）服务器配置_/etc/keepalived/keepalived-conf">Master（221.228.86.4）服务器配置 /etc/keepalived/keepalived.conf</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">global_defs &#123;</span><br><span class="line">   notification_email &#123;</span><br><span class="line">       xieyaoyao@yy.com</span><br><span class="line">   &#125;</span><br><span class="line">   notification_email_from mail@example.org</span><br><span class="line">   smtp_server mail.yy.com</span><br><span class="line">   smtp_connect_timeout <span class="number">30</span></span><br><span class="line">   router_id LVS_DEVEL</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#监测haproxy进程状态，每2秒执行一次</span></span><br><span class="line">vrrp_script chk_haproxy &#123;</span><br><span class="line">    script <span class="string">"/usr/local/keepalived/chk_haproxy.sh"</span></span><br><span class="line">    interval <span class="number">2</span></span><br><span class="line">    weight <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    state MASTER <span class="comment">#标示状态为MASTER</span></span><br><span class="line">    interface eth0</span><br><span class="line">    virtual_router_id <span class="number">51</span></span><br><span class="line">    priority <span class="number">101</span>   <span class="comment">#MASTER权重要高于BACKUP</span></span><br><span class="line">    advert_int <span class="number">1</span></span><br><span class="line">    mcast_src_ip <span class="number">221.228</span>.<span class="number">86.4</span> <span class="comment">#Master服务器IP</span></span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_<span class="built_in">type</span> PASS <span class="comment">#主从服务器验证方式</span></span><br><span class="line">        auth_pass <span class="number">1111</span></span><br><span class="line">    &#125;</span><br><span class="line">    track_script &#123;</span><br><span class="line">        chk_haproxy <span class="comment">#监测haproxy进程状态</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#VIP</span></span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        <span class="number">221.228</span>.<span class="number">86.70</span> <span class="comment">#虚拟IP</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Backup（221-228-86-6）服务器上的配置_/etc/keepalived/keepalived-conf">Backup（221.228.86.6）服务器上的配置 /etc/keepalived/keepalived.conf</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">global_defs &#123;</span><br><span class="line">   notification_email &#123;</span><br><span class="line">   user@example.com</span><br><span class="line">   &#125;</span><br><span class="line">   notification_email_from mail@example.org</span><br><span class="line">   smtp_server <span class="number">192.168</span>.x.x</span><br><span class="line">   smtp_connect_timeout <span class="number">30</span></span><br><span class="line">   router_id LVS_DEVEL</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">#监测haproxy进程状态，每2秒执行一次</span></span><br><span class="line">vrrp_script chk_haproxy &#123;</span><br><span class="line">    script <span class="string">"/usr/local/keepalived/chk_haproxy.sh"</span></span><br><span class="line">    interval <span class="number">2</span></span><br><span class="line">    weight <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    state BACKUP <span class="comment">#状态为BACKUP</span></span><br><span class="line">    interface eth0</span><br><span class="line">    virtual_router_id <span class="number">51</span></span><br><span class="line">    priority <span class="number">100</span>  <span class="comment">#权重要低于MASTER</span></span><br><span class="line">    advert_int <span class="number">1</span></span><br><span class="line">    mcast_src_ip <span class="number">221.228</span>.<span class="number">86.6</span> <span class="comment">#Backup服务器的IP</span></span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_<span class="built_in">type</span> PASS</span><br><span class="line">        auth_pass <span class="number">1111</span></span><br><span class="line">    &#125;</span><br><span class="line">    track_script &#123;</span><br><span class="line">        chk_haproxy <span class="comment">#监测haproxy进程状态</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#VIP</span></span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        <span class="number">221.228</span>.<span class="number">86.70</span> <span class="comment">#虚拟IP</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="chk_haproxy-sh内容_/usr/local/keepalived/chk_haproxy-sh">chk_haproxy.sh内容 /usr/local/keepalived/chk_haproxy.sh</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># author: weizhifeng</span></span><br><span class="line"><span class="comment"># description: </span></span><br><span class="line"><span class="comment"># 定时查看haproxy是否存在，如果不存在则启动haproxy，</span></span><br><span class="line"><span class="comment"># 如果启动失败，则停止keepalived</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line">status=$(docker inspect  <span class="operator">-f</span> <span class="string">"&#123;&#123;.State.Running&#125;&#125;"</span> haproxy-registry)</span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$&#123;status&#125;</span>"</span> = <span class="string">"false"</span> ]; <span class="keyword">then</span></span><br><span class="line">    docker start haproxy-registry</span><br><span class="line">    status2=$(docker inspect  <span class="operator">-f</span> <span class="string">"&#123;&#123;.State.Running&#125;&#125;"</span> haproxy-registry)</span><br><span class="line">    <span class="keyword">if</span> [ <span class="string">"<span class="variable">$&#123;status2&#125;</span>"</span> = <span class="string">"false"</span>  ]; <span class="keyword">then</span></span><br><span class="line">            service keepalived stop</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<h4 id="启动keepalived服务">启动keepalived服务</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ service keepalived start</span><br></pre></td></tr></table></figure>
+
       
     </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
 
     <footer class="post-footer">
       
         <div class="post-tags">
           
-            <a href="/tags/Docker/" rel="tag">#Docker</a>
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
           
-            <a href="/tags/Registry/" rel="tag">#Registry</a>
+            <a href="/tags/Registry/" rel="tag"># Registry</a>
           
         </div>
+      
+
+      
+        
       
 
       
@@ -398,6 +494,8 @@ VIP :">
           <div class="post-nav-next post-nav-item">
             
           </div>
+
+          <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
@@ -421,26 +519,24 @@ VIP :">
     </div>
   </div>
 
+          
+          </div>
+          
 
-        </div>
 
-        
-
-
-        
+          
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2015/11/04/highavailableregistry/"
-           data-title="基于haproxy和keepalived的高可用的私有docker registry" data-url="http://spacexnice.github.io/2015/11/04/highavailableregistry/">
+           data-title="基于haproxy和keepalived的高可用的私有docker registry" data-url="http://yoursite.com/2015/11/04/highavailableregistry/">
       </div>
     
   </div>
 
 
-      </div>
-
-      
+        </div>
         
+          
   
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
@@ -466,33 +562,48 @@ VIP :">
         </ul>
       
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" src="/uploads/headpic.jpg" alt="spacexnice" itemprop="image"/>
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/headpic.jpg"
+               alt="spacexnice" />
           <p class="site-author-name" itemprop="name">spacexnice</p>
+           
+              <p class="site-description motion-element" itemprop="description">知识在于分享</p>
+          
         </div>
-        <p class="site-description motion-element" itemprop="description">走在理想的路上</p>
         <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">4</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
 
-          <div class="site-state-item site-state-categories">
-            <a href="/categories">
-              <span class="site-state-item-count">4</span>
-              <span class="site-state-item-name">分类</span>
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
               </a>
-          </div>
+            </div>
+          
 
-          <div class="site-state-item site-state-tags">
-            <a href="/tags">
-              <span class="site-state-item-count">6</span>
-              <span class="site-state-item-name">标签</span>
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
               </a>
-          </div>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
 
         </nav>
 
@@ -502,18 +613,11 @@ VIP :">
           
             
               <span class="links-of-author-item">
-                <a href="https://github.com/spacexnice" target="_blank">
+                <a href="https://github.com/spacexnice" target="_blank" title="Github">
                   
-                    <i class="fa fa-globe"></i> GitHub
+                    <i class="fa fa-fw fa-globe"></i>
                   
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://weibo.com/u/2860440034" target="_blank">
-                  
-                    <i class="fa fa-weibo.com/u/2860440034"></i> Weibo
-                  
+                  Github
                 </a>
               </span>
             
@@ -523,36 +627,40 @@ VIP :">
         
         
 
-        <div class="links-of-author motion-element">
-          
-        </div>
+        
+        
+
+        
+
 
       </section>
 
       
+      <!--noindex-->
         <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc-indicator-top post-toc-indicator">
-            <i class="fa fa-angle-double-up"></i>
-          </div>
           <div class="post-toc">
+
             
               
             
+
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#部署结构"><span class="nav-number">1.</span> <span class="nav-text">部署结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker_Registry_配置"><span class="nav-number">2.</span> <span class="nav-text">Docker Registry 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Haproxy_配置"><span class="nav-number">3.</span> <span class="nav-text">Haproxy 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Keepalived主备配置"><span class="nav-number">4.</span> <span class="nav-text">Keepalived主备配置</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#部署结构"><span class="nav-number">1.</span> <span class="nav-text">部署结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改docker_daemon_启动参数"><span class="nav-number">1.0.1.</span> <span class="nav-text">修改docker daemon 启动参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker_Registry_配置"><span class="nav-number">2.</span> <span class="nav-text">Docker Registry 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Haproxy_配置"><span class="nav-number">3.</span> <span class="nav-text">Haproxy 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建haproxy-registry容器"><span class="nav-number">3.0.1.</span> <span class="nav-text">创建haproxy-registry容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#清除Iptables_规则，目前让所有机器都能访问该proxy"><span class="nav-number">3.0.2.</span> <span class="nav-text">清除Iptables 规则，目前让所有机器都能访问该proxy</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Keepalived主备配置"><span class="nav-number">4.</span> <span class="nav-text">Keepalived主备配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ubuntu_Keepalived安装"><span class="nav-number">4.0.1.</span> <span class="nav-text">Ubuntu Keepalived安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Master（221-228-86-4）服务器配置_/etc/keepalived/keepalived-conf"><span class="nav-number">4.0.2.</span> <span class="nav-text">Master（221.228.86.4）服务器配置 /etc/keepalived/keepalived.conf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Backup（221-228-86-6）服务器上的配置_/etc/keepalived/keepalived-conf"><span class="nav-number">4.0.3.</span> <span class="nav-text">Backup（221.228.86.6）服务器上的配置 /etc/keepalived/keepalived.conf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chk_haproxy-sh内容_/usr/local/keepalived/chk_haproxy-sh"><span class="nav-number">4.0.4.</span> <span class="nav-text">chk_haproxy.sh内容 /usr/local/keepalived/chk_haproxy.sh</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动keepalived服务"><span class="nav-number">4.0.5.</span> <span class="nav-text">启动keepalived服务</span></a></li></ol></li></ol></li></ol></div>
             
-          </div>
-          <div class="post-toc-indicator-bottom post-toc-indicator">
-            <i class="fa fa-angle-double-down"></i>
+
           </div>
         </section>
+      <!--/noindex-->
+      
+
       
 
     </div>
   </aside>
 
 
-      
+        
+      </div>
     </main>
 
     <footer id="footer" class="footer">
@@ -560,15 +668,16 @@ VIP :">
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="icon-next-heart fa fa-heart"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">spacexnice</span>
 </div>
 
+
 <div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
@@ -579,27 +688,94 @@ VIP :">
 </div>
 
 
+        
 
+        
       </div>
     </footer>
 
-    <div class="back-to-top"></div>
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
   </div>
 
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
 
   
   
 
   
-    
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
 
   
     
   
 
   <script type="text/javascript">
-    var duoshuoQuery = {short_name:"spacexnice"};
+    var duoshuoQuery = {short_name:"spacexnice-notes"};
     (function() {
       var ds = document.createElement('script');
       ds.type = 'text/javascript';ds.async = true;
@@ -610,198 +786,228 @@ VIP :">
       || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
   </script>
+
+  
     
-     
-
-
     
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   
 
   
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
-
-
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
-
-
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
+
   
-<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("QPK80ViuwIgElCPwykfhx8uJ-gzGzoHsz", "qWrvLdm3mNvWqrwChpOia3A8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
 
-
-<script type="text/javascript" id="sidebar.toc.highlight">
-  $(document).ready(function () {
-    var tocSelector = '.post-toc';
-    var $tocSelector = $(tocSelector);
-    var activeCurrentSelector = '.active-current';
-
-    $tocSelector
-      .on('activate.bs.scrollspy', function () {
-        var $currentActiveElement = $(tocSelector + ' .active').last();
-
-        removeCurrentActiveClass();
-        $currentActiveElement.addClass('active-current');
-
-        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
-      })
-      .on('clear.bs.scrollspy', function () {
-        removeCurrentActiveClass();
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
       });
 
-    function removeCurrentActiveClass () {
-      $(tocSelector + ' ' + activeCurrentSelector)
-        .removeClass(activeCurrentSelector.substring(1));
-    }
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
 
-    function processTOC () {
-      getTOCMaxHeight();
-      toggleTOCOverflowIndicators();
-    }
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
 
-    function getTOCMaxHeight () {
-      var height = $('.sidebar').height() -
-                   $tocSelector.position().top -
-                   $('.post-toc-indicator-bottom').height();
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
 
-      $tocSelector.css('height', height);
-
-      return height;
-    }
-
-    function toggleTOCOverflowIndicators () {
-      tocOverflowIndicator(
-        '.post-toc-indicator-top',
-        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
-      );
-
-      tocOverflowIndicator(
-        '.post-toc-indicator-bottom',
-        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
-      )
-    }
-
-    $(document).on('sidebar.motion.complete', function () {
-      processTOC();
-    });
-
-    $('body').scrollspy({ target: tocSelector });
-    $(window).on('resize', function () {
-      if ( $('.sidebar').hasClass('sidebar-active') ) {
-        processTOC();
-      }
-    });
-
-    onScroll($tocSelector);
-
-    function onScroll (element) {
-      element.on('mousewheel DOMMouseScroll', function (event) {
-          var oe = event.originalEvent;
-          var delta = oe.wheelDelta || -oe.detail;
-
-          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
-          event.preventDefault();
-
-          toggleTOCOverflowIndicators();
-      });
-    }
-
-    function tocOverflowIndicator (indicator, action) {
-      var $indicator = $(indicator);
-      var opacity = action === 'show' ? 1 : 0;
-      $indicator.velocity ?
-        $indicator.velocity('stop').velocity({
-          opacity: opacity
-        }, { duration: 100 }) :
-        $indicator.stop().animate({
-          opacity: opacity
-        }, 100);
-    }
-
-  });
-</script>
-
-<script type="text/javascript" id="sidebar.nav">
-  $(document).ready(function () {
-    var html = $('html');
-    var TAB_ANIMATE_DURATION = 200;
-    var hasVelocity = $.isFunction(html.velocity);
-
-    $('.sidebar-nav li').on('click', function () {
-      var item = $(this);
-      var activeTabClassName = 'sidebar-nav-active';
-      var activePanelClassName = 'sidebar-panel-active';
-      if (item.hasClass(activeTabClassName)) {
-        return;
-      }
-
-      var currentTarget = $('.' + activePanelClassName);
-      var target = $('.' + item.data('target'));
-
-      hasVelocity ?
-        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
-          target
-            .velocity('stop')
-            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
-            .addClass(activePanelClassName);
-        }) :
-        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
-          currentTarget.hide();
-          target
-            .stop()
-            .css({'opacity': 0, 'display': 'block'})
-            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
-              currentTarget.removeClass(activePanelClassName);
-              target.addClass(activePanelClassName);
-            });
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
         });
+    }
 
-      item.siblings().removeClass(activeTabClassName);
-      item.addClass(activeTabClassName);
-    });
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
 
-    $('.post-toc a').on('click', function (e) {
-      e.preventDefault();
-      var targetSelector = escapeSelector(this.getAttribute('href'));
-      var offset = $(targetSelector).offset().top;
-      hasVelocity ?
-        html.velocity('stop').velocity('scroll', {
-          offset: offset  + 'px',
-          mobileHA: false
-        }) :
-        $('html, body').stop().animate({
-          scrollTop: offset
-        }, 500);
-    });
-
-    // Expand sidebar on post detail page by default, when post has a toc.
-    motionMiddleWares.sidebar = function () {
-      var $tocContent = $('.post-toc-content');
-      if (CONFIG.sidebar === 'post') {
-        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
-          displaySidebar();
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
         }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
       }
-    };
-  });
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+  
+  
+  	 <!-- custom analytics part create by xiamo -->
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("QPK80ViuwIgElCPwykfhx8uJ-gzGzoHsz", "qWrvLdm3mNvWqrwChpOia3A8");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = $(document.getElementById(url)).text() + ': 0';
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = $(document.getElementById(url)).text() + ': ' + object.get('time');
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+	});
+}
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content = $(document.getElementById(url)).text() + ': ' + counter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = $(document.getElementById(url)).text() + ': ' + newcounter.get('time');
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+});
 </script>
 
-
-
-  <script type="text/javascript" src="/js/bootstrap.js"></script>
-
   
-  
-
-  
-  
-
 </body>
 </html>
